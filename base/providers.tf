@@ -12,6 +12,6 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id = "4322edc7-7003-4e31-a72e-8683d3486b53"
+  subscription_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # update yout Azure Subscription id
   features {}
 }
