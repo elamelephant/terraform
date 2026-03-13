@@ -11,7 +11,7 @@
 
 ```
 
-> ⚠️ **Note:** “Update the subscription id in the providers.tf file”
+> ⚠️ **Note:** “Update the subscription ID in the base/providers.tf file”
 
 ## Basic Execution flow
 ```hcl
@@ -23,8 +23,8 @@
 
 ## Important Note
 ```hcl
-    1. Github PAT token configured via Azure key vault. This is not the correct way, usually, In the real world, it has to be passed via CI/CD env varaible and direct to TF_VAR
-    2. All Terraform output varaibles are not added. please add on your needs
+    1. GitHub PAT token configured via Azure key vault. This is not the correct way, usually. In the real world, it has to be passed via CI/CD env variable and directly to TF_VAR
+    2. All Terraform output variables are not added. Please add to your needs
 ```
 
 
