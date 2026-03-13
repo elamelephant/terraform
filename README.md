@@ -1,7 +1,7 @@
 # This is a base Terraform file to create an Azure App Service in the Azure cloud platform
 
-## Before running the terraform please follow the below instruction
-## To Authinticate azure cloud platform to execute the terraform please follow this command
+## Before running Terraform, please follow the instructions below.
+## To authenticate the Azure cloud platform to execute Terraform, please follow this command
 ```hcl
     az login
     az login --service-principal -u "CLIENT_ID" -p "CLIENT_SECRET" --tenant "TENANT_ID"
