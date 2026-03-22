@@ -1,12 +1,12 @@
-# Configure the keyvault to download the secrets
-# This is not the correct way, usually, it has to be passed via CI/CD env varaible TF_VAR
+# Configure the key vault to download the secrets
+# This is not the correct way, usually, it has to be passed via CI/CD env variable TF_VAR
 data "azurerm_key_vault" "keyvault" {
   name                = var.keyvault_name
   resource_group_name = var.vault_resourcegroup_name
 }
 
 # download the secret from the key vault
-# This is not the correct way, usually, it has to be passed via CI/CD env varaible TF_VAR
+# This is not the correct way, usually, it has to be passed via CI/CD env variable TF_VAR
 data "azurerm_key_vault_secret" "github_pat" {
   name         = var.github_secret_name
   key_vault_id = data.azurerm_key_vault.keyvault.id
@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "rg_group" {
   name     = random_pet.rg_name.id
 }
 
-# Call the module to create a azure app service plan
+# Call the module to create an Azure app service plan
 module "service_plan" {
   source = "git::https://github.com/elamelephant/terraform_modules.git//service_plan?ref=v1.3"
 
@@ -34,7 +34,7 @@ module "service_plan" {
   sku_name   = "B1"
 }
 
-# Call the module to create a azure web linux app
+# Call the module to create an Azure web Linux app
 module "linux_web_app" {
   source = "git::https://github.com/elamelephant/terraform_modules.git//linux_web_app?ref=v1.3"
 
@@ -44,7 +44,6 @@ module "linux_web_app" {
   service_plan_id     = module.service_plan.id
 
   site_config = {
-    http2_enabled    = false
     app_command_line = "fastapi run main.py"
 
     application_stack = {
@@ -59,15 +58,15 @@ module "linux_web_app" {
 
 }
 
-# Assign the github token to the source control for the access
-# This is not the correct way, usually, it has to be passed via CI/CD env varaible TF_VAR
+# Assign the GitHub token to the source control for access
+# This is not the correct way, usually, it has to be passed via CI/CD env variable TF_VAR
 # detail: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/source_control_token
 resource "azurerm_source_control_token" "access" {
   type  = "GitHub"
   token = data.azurerm_key_vault_secret.github_pat.value
 }
 
-# Call the module to configure the source control for CI/CD
+# Call the module to configure the source control for the CI/CD
 module "sourcecontrol" {
   source          = "git::https://github.com/elamelephant/terraform_modules.git//source_control?ref=v1.3"
   webapp_id       = module.linux_web_app.id
